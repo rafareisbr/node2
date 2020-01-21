@@ -14,6 +14,12 @@ CREATE TABLE IF NOT EXISTS "users" (
 	PRIMARY KEY("id")
 );
 
-INSERT INTO public.users (id, name) VALUES (DEFAULT, 'Rafael Reis');
-INSERT INTO public.products (id, name, userId) VALUES (DEFAULT, 'Hillux', 1);
+INSERT INTO public.users (id, name)
+	VALUES (DEFAULT, 'Rafael Reis');
 
+// No PgAdmin
+INSERT INTO public.products(id, name, "userId")
+	VALUES (DEFAULT, 'Toyota Etius', 1);
+
+// Na App
+INSERT INTO products (id, name, "userId") VALUES (DEFAULT, $1, $2)
