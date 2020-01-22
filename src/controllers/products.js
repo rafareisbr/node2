@@ -80,4 +80,21 @@ router.post('/update/:productId', (req, res) => {
     }
 })
 
+router.post('/delete', (req, res) => {
+    const userId = req.user.id
+
+    const product = new Product(req.body.id, null, parseInt(userId))
+
+    // Produto pertence ao usuário atual
+    if (userId === product.userId) {
+        Product.deleteProduct(product)
+            .then(result => {
+                return res.redirect('/products')
+            })
+            .catch(err => console.log(err))
+    } else {
+        res.redirect('/products')
+    }
+})
+
 module.exports = router
