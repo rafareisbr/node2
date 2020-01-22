@@ -1,25 +1,51 @@
 DROP TABLE IF EXISTS "products" CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
+DROP TABLE IF EXISTS "orders" CASCADE;
+DROP TABLE IF EXISTS "orderItems" CASCADE;
 
-CREATE TABLE IF NOT EXISTS "products" (
+CREATE TABLE IF NOT EXISTS "logins" (
 	"id" SERIAL,
-	"name" VARCHAR(255),
-	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	"email" VARCHAR NOT NULL UNIQUE,
+	"password" VARCHAR NOT NULL
 	PRIMARY KEY("id")
 );
 
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" SERIAL,
-	"name" VARCHAR(255),
+	"name" VARCHAR,
+	"email" VARCHAR NOT NULL UNIQUE,
 	PRIMARY KEY("id")
 );
+
+CREATE TABLE IF NOT EXISTS "products" (
+	"id" SERIAL,
+	"name" VARCHAR UNIQUE,
+	"price" DECIMAL NOT NULL,
+	"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
+	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	PRIMARY KEY("id")
+);
+
+CREATE TABLE IF NOT EXISTS "orders" (
+	"id" SERIAL,
+	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "orderItems" (
+	"id" SERIAL,
+	"quantity" INTEGER DEFAULT 0,
+	"unitPrice" DECIMAL NOT NULL,
+	"productId" INTEGER REFERENCES "products" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	"orderId" INTEGER REFERENCES "orders" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	PRIMARY KEY("id")
+)
 
 INSERT INTO public.users (id, name)
 	VALUES (DEFAULT, 'Rafael Reis');
 
-// No PgAdmin
-INSERT INTO public.products(id, name, "userId")
-	VALUES (DEFAULT, 'Toyota Etius', 1);
+INSERT INTO public.products (id, name, price, "userId")
+	VALUES (DEFAULT, $1, $2, $3);
 
-// Na App
-INSERT INTO products (id, name, "userId") VALUES (DEFAULT, $1, $2)
+INSERT INTO public.orders (id, "userId" )
+ VALUES (DEFAULT, $1, $2, $3, $4);
