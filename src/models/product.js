@@ -3,7 +3,7 @@ const Db = require('../data/index')
 module.exports = class Product {
     static getProducts = user => {
         return Db.query(
-            `SELECT * FROM products AS product WHERE product."userId"=$1`,
+            `SELECT * FROM products AS product WHERE product."userId"=$1 ORDER BY id`,
             [user.id]
         )
     }
@@ -23,7 +23,10 @@ module.exports = class Product {
     }
 
     static updateProduct = product => {
-        return Db.query(`UPDATE products SET name=$1`, [product.name])
+        return Db.query(`UPDATE products SET name=$1 WHERE products.id = $2`, [
+            product.name,
+            product.id
+        ])
     }
 
     static deleteProduct = product => {

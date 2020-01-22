@@ -56,15 +56,28 @@ router.get('/update/:productId', (req, res) => {
         .catch(err => console.log(err))
 })
 
+/*
+    Para atualizar um produto. Preciso:
+    - Checar se o userId condiz com o do usuário
+    - Se tem id no produto
+*/
 router.post('/update/:productId', (req, res) => {
-    const productId = req.params.productId
     const userId = req.user.id
 
-    /*
-        Para atualizar um produto. Preciso:
-        - Checar se o userId condiz com o do usuário
-        - Se tem id no produto
-    */
+    const product = new Product(
+        req.params.productId,
+        req.body.name,
+        parseInt(req.body.userId)
+    )
+
+    // Produto pertence ao usuário atual
+    if (userId === product.userId) {
+        Product.updateProduct(product)
+            .then(result => {
+                return res.redirect('/products')
+            })
+            .catch(err => console.log(err))
+    }
 })
 
 module.exports = router
