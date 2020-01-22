@@ -5,6 +5,7 @@
         <% if ( products.length > 0 ) { %>
             <% for (let product of products) { %>
                 <p><%= product.name %></p>
+                <a href="/products/update/<%= product.id %>">Alterar</a>
             <% }%>
         <% } else { %>
             <p>Nenhum produto encontrado.</p>

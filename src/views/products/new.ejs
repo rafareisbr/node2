@@ -3,8 +3,11 @@
 </head>
 <body>
 
-    <form action="/products/new" method="post">
-        <input name="name" placeholder="Name">
+<form 
+    action="/products/<% if (editing) { %>update/<%= product.id %><% } else { %>new/<% } %>"
+    method="post">
+        <input name="name" placeholder="Name" value="<%= product.name %>">
+        <input type="hidden" name="userId" value="<%= product.userId %>">
         <button>Salvar</button>
     </form>
 
