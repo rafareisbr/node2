@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 
 const App = express()
-const BaseController = require('./controllers')
+const BaseController = require('./routes')
 const Db = require('./data')
 
 App.set('view engine', 'ejs')

@@ -21,15 +21,13 @@ CREATE TABLE IF NOT EXISTS "products" (
 	"id" SERIAL,
 	"name" VARCHAR UNIQUE,
 	"price" DECIMAL NOT NULL,
-	"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL,
 	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY("id")
 );
 
 CREATE TABLE IF NOT EXISTS "orders" (
 	"id" SERIAL,
-	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	"createdAt" TIMESTAMP WITH TIME ZONE NOT NULL
+	"userId" INTEGER REFERENCES "users" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "orderItems" (
@@ -48,4 +46,4 @@ INSERT INTO public.products (id, name, price, "userId")
 	VALUES (DEFAULT, $1, $2, $3);
 
 INSERT INTO public.orders (id, "userId" )
- VALUES (DEFAULT, $1, $2, $3, $4);
+	VALUES (DEFAULT, $1, $2, $3, $4);

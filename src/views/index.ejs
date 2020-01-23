@@ -4,12 +4,12 @@
     <body>
         <% if ( products.length > 0 ) { %>
             <% for (let product of products) { %>
+                
                 <p><%= product.name %></p>
-                <a href="/products/update/<%= product.id %>">Alterar</a>
 
-                <form method="post" action="/products/delete">
+                <form method="post" action="/cart/add-product">
                     <input type="hidden" name="id" value="<%= product.id %>">
-                    <button type="submit">Remover</button>
+                    <button type="submit">Add to Cart</button>
                 </form>
 
             <% }%>

@@ -1,10 +1,6 @@
-const express = require('express')
-
 const Product = require('../models/product')
 
-const router = express.Router()
-
-router.get('', (req, res) => {
+exports.getProducts = (req, res) => {
     const user = req.user
     Product.getProducts(user)
         .then(result => {
@@ -17,17 +13,17 @@ router.get('', (req, res) => {
             })
         })
         .catch(err => res.status(401).json(err.message))
-})
+}
 
-router.get('/new', (req, res) => {
-    res.render('products/new', {
+exports.getProductAdd = (req, res) => {
+    res.render('products/add', {
         pageTitle: 'Add Product',
         product: new Product(),
         editing: false
     })
-})
+}
 
-router.post('/new', (req, res) => {
+exports.postProductAdd = (req, res) => {
     const user = req.user
     const productName = req.body.name
     Product.addProduct(new Product(null, productName, user.id))
@@ -35,9 +31,11 @@ router.post('/new', (req, res) => {
             res.status(201).redirect('/products')
         })
         .catch(err => res.status(401).json(err.message))
-})
+}
 
-router.get('/update/:productId', (req, res) => {
+exports.getProductDetail = (req, res) => {}
+
+exports.getProductUpdate = (req, res) => {
     const productId = req.params.productId
 
     Product.getProduct(productId)
@@ -54,14 +52,14 @@ router.get('/update/:productId', (req, res) => {
             })
         })
         .catch(err => console.log(err))
-})
+}
 
 /*
     Para atualizar um produto. Preciso:
     - Checar se o userId condiz com o do usuário
     - Se tem id no produto
 */
-router.post('/update/:productId', (req, res) => {
+exports.postProductUpdate = (req, res) => {
     const userId = req.user.id
 
     const product = new Product(
@@ -78,9 +76,9 @@ router.post('/update/:productId', (req, res) => {
             })
             .catch(err => console.log(err))
     }
-})
+}
 
-router.post('/delete', (req, res) => {
+exports.postProductDelete = (req, res) => {
     const userId = req.user.id
 
     const product = new Product(req.body.id, null, parseInt(userId))
@@ -95,6 +93,4 @@ router.post('/delete', (req, res) => {
     } else {
         res.redirect('/products')
     }
-})
-
-module.exports = router
+}

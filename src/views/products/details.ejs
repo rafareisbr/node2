@@ -1,0 +1,18 @@
+<%- include('./includes/header.ejs') %>
+    </head>
+
+    <a href="/products/">Voltar</a>
+    <body>
+        <% if ( product.length > 0 ) { %>
+                <p><%= product.name %></p>
+                <a href="/products/update/<%= product.id %>">Alterar</a>
+
+                <form method="post" action="/products/delete">
+                    <input type="hidden" name="id" value="<%= product.id %>">
+                    <button type="submit">Remover</button>
+                </form>
+        <% } else { %>
+            <p>Produto não encontrado.</p>
+        <% } %>
+        
+<%- include('./includes/footer.ejs') %>

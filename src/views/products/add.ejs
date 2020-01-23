@@ -4,7 +4,7 @@
 <body>
 
 <form 
-    action="/products/<% if (editing) { %>update/<%= product.id %><% } else { %>new/<% } %>"
+    action="/products/<% if (editing) { %><%= product.id %>/update<% } else { %>add/<% } %>"
     method="post">
         <input name="name" placeholder="Name" value="<%= product.name %>">
         <input type="hidden" name="userId" value="<%= product.userId %>">
