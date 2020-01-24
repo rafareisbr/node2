@@ -3,8 +3,12 @@ const Db = require('../data/index')
 module.exports = class Product {
     static getProducts = user => {
         return Db.query(
-            `SELECT * FROM products AS product WHERE product."userId"=$1 ORDER BY id`,
-            [user.id]
+            `
+            SELECT products.id, products.name, users.id, users.name
+            FROM products
+            INNER JOIN users
+            ON products."userId" = users.id
+            `
         )
     }
 
