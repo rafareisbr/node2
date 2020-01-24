@@ -1,0 +1,18 @@
+*,
+*:after,
+*:before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+    background-color: black;
+    color: #fefefe;
+}
+
+a,
+a:visited {
+    color: #1aa;
+}

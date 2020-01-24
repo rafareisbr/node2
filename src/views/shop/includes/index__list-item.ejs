@@ -1,0 +1,11 @@
+<li>
+    <a href="/product/<%= product.id %>">
+        <h4><%= product.name %></h4>
+    </a>
+    <p>R$ <%= product.price %></p>
+    <p>Vendido por: <%= product.vendedor.name %></p>
+    <form action="/product" method="post">
+        <input type="hidden" name="productId" value="<%= product.id %>" />
+        <button type="submit">Adicionar ao Carrinho</button>
+    </form>
+</li>
